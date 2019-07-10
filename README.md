@@ -4,6 +4,17 @@ A short Python script that copies one playlist to another playlist.
 
 ## Usage
 
+Firstly you need to get credientials from Spotify, to use their API.
+
+Create a file named spotifyconfig.py and populate it with:
+
+```python
+CLIENT_ID = ""
+CLIENT_SECRET = ""
+```
+
+Then open a terminal and type:
+
 ```sh
 main.py [playlist to copy] [target playlist]
 ```
