@@ -1,9 +1,12 @@
 def get_playlist_tracks(client, username, uri):
-    results = client.user_playlist_tracks(username, uri)
-    tracks = results['items']
+    results = client.user_playlist_tracks(username, playlist_id=uri)
+    tracks = []
+    for i in results['items']:
+        tracks.append(i['track']['id'])
     while results['next']:
         results = client.next(results)
-        tracks.extend(results['items'])
+        for i in results['items']:
+            tracks.append(i['track']['id'])
     return tracks
 
 
