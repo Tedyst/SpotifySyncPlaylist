@@ -18,9 +18,9 @@ def main():
             "Enter the URI of the playlist that you want to copy: ")
         # This makes the program compatible with open.spotify.com links
         URI = 'spotify:' + \
-            re.sub('(http[s]?://)?(open.spotify.com)/',
+            re.sub(r'(http[s]?:\/\/)?(open.spotify.com)\/',
                    '', URI).replace('/', ':')
-        URI = re.sub('?.*', '', URI)
+        URI = re.sub(r'\?.*', '', URI)
 
         usernametocopy = URI.split(":")[2]
         playlisttocopy = URI.split(":")[4]
@@ -29,9 +29,9 @@ def main():
         URI = input(
             "Enter the URI of the target playlist: ")
         URI = 'spotify:' + \
-            re.sub('(http[s]?://)?(open.spotify.com)/',
+            re.sub(r'(http[s]?:\/\/)?(open.spotify.com)\/',
                    '', URI).replace('/', ':')
-        URI = re.sub('?.*', '', URI)
+        URI = re.sub(r'\?.*', '', URI)
 
         usernametarget = URI.split(':')[2]
         playlisttarget = URI.split(':')[4]

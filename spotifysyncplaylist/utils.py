@@ -19,7 +19,7 @@ def clear_playlist(client, username, target):
     client.user_playlist_replace_tracks(username, target, [])
 
 
-def initSpotifyAPI(username, scope="suser-library-read playlist-modify-public playlist-modify-private", client_id=CLIENT_ID,
+def initSpotifyAPI(username, scope="user-library-read playlist-modify-public playlist-modify-private", client_id=CLIENT_ID,
                    client_secret=CLIENT_SECRET, redirect_uri='https://stoicatedy.ovh'):
     token = util.prompt_for_user_token(username, scope, client_id,
                                        client_secret, redirect_uri='https://stoicatedy.ovh')
