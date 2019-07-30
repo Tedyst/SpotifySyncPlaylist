@@ -2,23 +2,42 @@
 import spotipy
 import sys
 import logging as log
-from .utils import initSpotifyAPI, get_playlist_tracks, clear_playlist
+import re
+from spotifysyncplaylist.utils import initSpotifyAPI, get_playlist_tracks, clear_playlist
 
-if __name__ == "__main__":
+
+def main():
     if len(sys.argv) is 3:
+        # In case we get two spotify URIs in sys.argv
         usernametocopy = sys.argv[1].split(':')[2]
         playlisttocopy = sys.argv[1].split(':')[4]
         usernametarget = sys.argv[2].split(':')[2]
         playlisttarget = sys.argv[2].split(':')[4]
     elif len(sys.argv) < 5:
-        usernametocopy = input("Enter your user ID: ")
-        playlisttocopy = input(
-            "Enter the ID of the playlist that you want to copy: ")
-        usernametarget = input(
-            "Enter the user ID of the owner of the playlist that you want to copy to: ")
-        playlisttarget = input(
-            "Enter the ID of the playlist that you want to copy to: ")
+        URI = input(
+            "Enter the URI of the playlist that you want to copy: ")
+        # This makes the program compatible with open.spotify.com links
+        URI = 'spotify:' + \
+            re.sub('(http[s]?:\/\/)?(open.spotify.com)\/',
+                   '', URI).replace('/', ':')
+        URI = re.sub('\?.*', '', URI)
+
+        usernametocopy = URI.split(":")[2]
+        playlisttocopy = URI.split(":")[4]
+
+        # This makes the program compatible with open.spotify.com links
+        URI = input(
+            "Enter the URI of the target playlist: ")
+        URI = 'spotify:' + \
+            re.sub('(http[s]?:\/\/)?(open.spotify.com)\/',
+                   '', URI).replace('/', ':')
+        URI = re.sub('\?.*', '', URI)
+
+        usernametarget = URI.split(':')[2]
+        playlisttarget = URI.split(':')[4]
+
     else:
+        # In case we get four IDs in sys.argv
         usernametocopy = sys.argv[1]
         playlisttocopy = sys.argv[2]
         usernametarget = sys.argv[3]
@@ -33,3 +52,7 @@ if __name__ == "__main__":
         sp.user_playlist_add_tracks(
             usernametarget, playlisttarget, playlist[0:99])
         playlist = playlist[100:]
+
+
+if __name__ == "__main__":
+    main()
