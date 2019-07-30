@@ -9,10 +9,21 @@ from spotifysyncplaylist.utils import initSpotifyAPI, get_playlist_tracks, clear
 def main():
     if len(sys.argv) is 3:
         # In case we get two spotify URIs in sys.argv
-        usernametocopy = sys.argv[1].split(':')[2]
-        playlisttocopy = sys.argv[1].split(':')[4]
-        usernametarget = sys.argv[2].split(':')[2]
-        playlisttarget = sys.argv[2].split(':')[4]
+        URI = sys.argv[1]
+        URI = 'spotify:' + \
+            re.sub(r'(http[s]?:\/\/)?(open.spotify.com)\/',
+                   '', URI).replace('/', ':')
+        URI = re.sub(r'\?.*', '', URI)
+        usernametocopy = URI.split(':')[2]
+        playlisttocopy = URI.split(':')[4]
+
+        URI = sys.argv[1]
+        URI = 'spotify:' + \
+            re.sub(r'(http[s]?:\/\/)?(open.spotify.com)\/',
+                   '', URI).replace('/', ':')
+        URI = re.sub(r'\?.*', '', URI)
+        usernametarget = URI.split(':')[2]
+        playlisttarget = URI.split(':')[4]
     elif len(sys.argv) < 5:
         URI = input(
             "Enter the URI of the playlist that you want to copy: ")
