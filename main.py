@@ -3,7 +3,15 @@ import spotipy
 import sys
 import logging as log
 import re
+import time
 from spotifysyncplaylist.utils import initSpotifyAPI, get_playlist_tracks, clear_playlist
+from spotifysyncplaylist.config import AUTO, TIMEOUT
+
+usernametocopy = ""
+playlisttocopy = ""
+usernametarget = ""
+playlisttarget = ""
+sp = ""
 
 
 def main():
@@ -55,6 +63,13 @@ def main():
         playlisttarget = sys.argv[4]
 
     sp = initSpotifyAPI(usernametocopy)
+    if sp:
+        pass
+    else:
+        log.error("Spotify API not working.")
+
+
+def get_playlists():
     playlist = get_playlist_tracks(sp, usernametocopy, playlisttocopy)
     # This sets the playlist to nothing
     clear_playlist(sp, usernametarget, playlisttarget)
@@ -66,4 +81,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if AUTO == True:
+        while True:
+            main()
+            log.log(
+                "INFO", "We ran main(), and copied the playlist. Next run in 60 seconds.")
+            time.sleep(TIMEOUT)
+    else:
+        main()
+        get_playlists()

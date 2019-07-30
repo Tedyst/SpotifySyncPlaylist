@@ -19,7 +19,7 @@ Then open a terminal and type:
 main.py [playlist to copy] [target playlist]
 ```
 
-You need to use the playlist's URI.
+You need to use the playlist's URI or playlist's `open.spotify.com` URL.
 
 ## Example
 
