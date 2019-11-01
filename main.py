@@ -7,39 +7,36 @@ import time
 from spotifysyncplaylist.utils import initSpotifyAPI, get_playlist_tracks, clear_playlist
 from spotifysyncplaylist.config import AUTO, TIMEOUT
 
-usernametocopy = ""
-playlisttocopy = ""
-usernametarget = ""
-playlisttarget = ""
-sp = ""
-
 
 def main():
     if len(sys.argv) is 3:
         # In case we get two spotify URIs in sys.argv
         URI = sys.argv[1]
-        URI = 'spotify:' + \
-            re.sub(r'(http[s]?:\/\/)?(open.spotify.com)\/',
-                   '', URI).replace('/', ':')
-        URI = re.sub(r'\?.*', '', URI)
+        if "http" in URI:
+            URI = 'spotify:' + \
+                re.sub(r'(http[s]?:\/\/)?(open.spotify.com)\/',
+                       '', URI).replace('/', ':')
+            URI = re.sub(r'\?.*', '', URI)
         usernametocopy = URI.split(':')[2]
         playlisttocopy = URI.split(':')[4]
 
-        URI = sys.argv[1]
-        URI = 'spotify:' + \
-            re.sub(r'(http[s]?:\/\/)?(open.spotify.com)\/',
-                   '', URI).replace('/', ':')
-        URI = re.sub(r'\?.*', '', URI)
+        URI = sys.argv[2]
+        if "http" in URI:
+            URI = 'spotify:' + \
+                re.sub(r'(http[s]?:\/\/)?(open.spotify.com)\/',
+                       '', URI).replace('/', ':')
+            URI = re.sub(r'\?.*', '', URI)
         usernametarget = URI.split(':')[2]
         playlisttarget = URI.split(':')[4]
     elif len(sys.argv) < 5:
         URI = input(
             "Enter the URI of the playlist that you want to copy: ")
         # This makes the program compatible with open.spotify.com links
-        URI = 'spotify:' + \
-            re.sub(r'(http[s]?:\/\/)?(open.spotify.com)\/',
-                   '', URI).replace('/', ':')
-        URI = re.sub(r'\?.*', '', URI)
+        if "http" in URI:
+            URI = 'spotify:' + \
+                re.sub(r'(http[s]?:\/\/)?(open.spotify.com)\/',
+                       '', URI).replace('/', ':')
+            URI = re.sub(r'\?.*', '', URI)
 
         usernametocopy = URI.split(":")[2]
         playlisttocopy = URI.split(":")[4]
@@ -47,10 +44,11 @@ def main():
         # This makes the program compatible with open.spotify.com links
         URI = input(
             "Enter the URI of the target playlist: ")
-        URI = 'spotify:' + \
-            re.sub(r'(http[s]?:\/\/)?(open.spotify.com)\/',
-                   '', URI).replace('/', ':')
-        URI = re.sub(r'\?.*', '', URI)
+        if "http" in URI:
+            URI = 'spotify:' + \
+                re.sub(r'(http[s]?:\/\/)?(open.spotify.com)\/',
+                       '', URI).replace('/', ':')
+            URI = re.sub(r'\?.*', '', URI)
 
         usernametarget = URI.split(':')[2]
         playlisttarget = URI.split(':')[4]
@@ -67,9 +65,12 @@ def main():
         pass
     else:
         log.error("Spotify API not working.")
+    get_playlists(sp, usernametocopy, usernametarget,
+                  playlisttocopy, playlisttarget)
 
 
-def get_playlists():
+def get_playlists(sp, usernametocopy, usernametarget,
+                  playlisttocopy, playlisttarget):
     playlist = get_playlist_tracks(sp, usernametocopy, playlisttocopy)
     # This sets the playlist to nothing
     clear_playlist(sp, usernametarget, playlisttarget)
@@ -85,8 +86,7 @@ if __name__ == "__main__":
         while True:
             main()
             log.log(
-                "INFO", "We ran main(), and copied the playlist. Next run in 60 seconds.")
+                1, "We ran main(), and copied the playlist. Next run in 60 seconds.")
             time.sleep(TIMEOUT)
     else:
         main()
-        get_playlists()

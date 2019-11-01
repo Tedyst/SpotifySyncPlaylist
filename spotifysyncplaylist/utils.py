@@ -1,4 +1,4 @@
-from .config import *
+from .config import CLIENT_ID, CLIENT_SECRET
 import spotipy.util as util
 import spotipy
 
