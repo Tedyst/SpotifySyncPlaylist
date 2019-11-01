@@ -3,7 +3,10 @@ import sys
 import logging as log
 import re
 import time
-from spotifysyncplaylist.utils import initSpotifyAPI, get_playlist_tracks, clear_playlist
+from spotifysyncplaylist.utils import \
+    initSpotifyAPI,\
+    get_playlist_tracks,\
+    clear_playlist
 from spotifysyncplaylist.config import AUTO, TIMEOUT
 
 
@@ -85,7 +88,10 @@ if __name__ == "__main__":
         while True:
             main()
             log.log(
-                1, "We ran main(), and copied the playlist. Next run in 60 seconds.")
+                1,
+                "We ran main(), and copied the playlist. " +
+                "Next run in 60 seconds."
+            )
             time.sleep(TIMEOUT)
     else:
         main()
