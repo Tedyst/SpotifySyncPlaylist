@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-import spotipy
 import sys
 import logging as log
 import re
@@ -9,7 +8,7 @@ from spotifysyncplaylist.config import AUTO, TIMEOUT
 
 
 def main():
-    if len(sys.argv) is 3:
+    if len(sys.argv) == 3:
         # In case we get two spotify URIs in sys.argv
         URI = sys.argv[1]
         if "http" in URI:
@@ -82,7 +81,7 @@ def get_playlists(sp, usernametocopy, usernametarget,
 
 
 if __name__ == "__main__":
-    if AUTO == True:
+    if AUTO is True:
         while True:
             main()
             log.log(
