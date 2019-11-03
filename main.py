@@ -90,7 +90,7 @@ if __name__ == "__main__":
             log.log(
                 1,
                 "We ran main(), and copied the playlist. " +
-                "Next run in 60 seconds."
+                "Next run in " + str(TIMEOUT) + " seconds."
             )
             time.sleep(TIMEOUT)
     else:
